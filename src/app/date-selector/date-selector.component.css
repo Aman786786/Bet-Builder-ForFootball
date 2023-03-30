@@ -1,0 +1,59 @@
+.date-selector ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+}
+
+.date-selector li {
+  flex: 1;
+  text-align: center;
+}
+
+.date-selector a {
+  display: block;
+  padding: 10px;
+  color: #333;
+  text-decoration: none;
+  transition: background-color 0.2s ease;
+  border-radius: 26px;
+  border: 1px solid #ccc;
+  margin-right: 10px;
+}
+
+.date-selector a:first-child {
+  margin-left: 10px;
+}
+
+.date-selector a.selected {
+  background-color: rgb(215, 80, 35);
+  color: white;
+}
+.match-list {
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+table tbody td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+  vertical-align: middle;
+}
+
+table tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.loading-message {
+  margin-top: 20px;
+  text-align: center;
+}

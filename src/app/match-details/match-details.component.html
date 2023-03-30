@@ -1,0 +1,217 @@
+<html>
+  <meta charset="UTF-8" />
+  <title>Match Details</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 40vh;
+    }
+
+    .match-details {
+      background-color: #ff6600;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+      margin: 0 -20px 20px;
+
+      position: relative;
+      z-index: 1;
+    }
+
+    .match-details h2 {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 0;
+      transform: skew(-20deg);
+    }
+
+    .match-details p {
+      margin: 10px 0;
+    }
+
+    .match-details span {
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+
+    .match-details .team-names {
+      background-color: black;
+      font-weight: bold;
+      transform: skew(20deg);
+      display: inline-block;
+      margin-top: 10px;
+      padding: 5px 10px;
+      color: white;
+    }
+
+    .select-container {
+      margin-bottom: 20px;
+      transform: skew(20deg);
+    }
+
+    label {
+      display: block;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    select {
+      padding: 5px;
+      border-radius: 4px;
+      border: none;
+      width: 100%;
+      background-color: #f2f2f2;
+    }
+
+    button {
+      padding: 8px 20px;
+      background-color: #ff6600;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-weight: bold;
+      transform: skew(-20deg);
+    }
+
+    button:hover {
+      background-color: #cc5500;
+    }
+
+    .bet-builder-table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .bet-builder-table th,
+    .bet-builder-table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .bet-builder-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+    }
+
+    .bet-builder-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    .bet-builder-table tr:hover {
+      background-color: #ddd;
+    }
+
+    .bet-builder-table td:first-child {
+      font-weight: bold;
+    }
+
+    .hidden {
+      display: none;
+    }
+    .bet-builder-table th {
+      background-color: #f2f2f2;
+      font-weight: bold;
+      text-align: center;
+      padding: 12px;
+      border: 1px solid #ddd;
+    }
+  </style>
+
+  <body>
+    <div class="match-details">
+      <h2>Match Details</h2>
+      <p class="kickoff">
+        Kick-off:
+        <span style="color: white; background-color: orange">{{
+          selectedMatch.KickOffLocalTime | date : "MMM d, y h:mm a"
+        }}</span>
+      </p>
+      <p class="teams">
+        <span
+          style="color: white; background-color: black"
+          class="team-names"
+          >{{ selectedMatch.Team1Name }}</span
+        >
+        vs
+        <span
+          style="color: white; background-color: black"
+          class="team-names"
+          >{{ selectedMatch.Team2Name }}</span
+        >
+      </p>
+      <p class="league">
+        <span>{{ selectedMatch.LeagueName }} -League</span>
+      </p>
+    </div>
+  </body>
+</html>
+
+<div class="container">
+  <!-- <p class="teams"><span style="color: white; background-color: rgb(0, 0, 0);" class="team-names">{{ selectedMatch.Team1Name }}</span> vs <span style="color: white; background-color: black;" class="team-names">{{ selectedMatch.Team2Name }}</span></p> -->
+  <div>
+    <label>Market:</label>
+    <select [(ngModel)]="selectedMarketId" (change)="onMarketChange()">
+      <option value="">-- Select Market --</option>
+      <option *ngFor="let market of markets" [value]="market.MarketId">
+        {{ market.MarketName }}
+      </option>
+    </select>
+    <div *ngIf="selectedMarketId">
+      <p>Selected market ID: {{ selectedMarketId }}</p>
+    </div>
+  </div>
+
+  <div>
+    <label>Legs:</label>
+    <select [(ngModel)]="selectionId" (change)="onLegChange()">
+      <option value="">-- Select Leg --</option>
+      <option *ngFor="let leg of legs" [value]="leg.selectionId">
+        {{ leg.selectionId }}
+      </option>
+    </select>
+    <div *ngIf="selectionId">
+      <p>Selected leg ID: {{ selectionId }}</p>
+    </div>
+  </div>
+  <!--
+    <div>
+    <label>Outcome:</label>
+    <select [(ngModel)]="selectedOutcome">
+    <option value="">-- Select Outcome --</option>
+    <option value="1">Home Win</option>
+    <option value="X">Draw</option>
+    <option value="2">Away Win</option>
+    </select>
+    </div> -->
+  <div>
+    <button (click)="getBetBuilderBets()">Get Bets</button>
+  </div>
+
+  <h3>Bet Builder Bets</h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="vertical-align: top">Bet Builder Odds:</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let detail of matchDetails">
+        <td>{{ detail.Market }}</td>
+        <td>{{ detail.Keystart }}</td>
+        <td>{{ detail.Outcome }}</td>
+        <td>{{ detail.TotalOdds }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

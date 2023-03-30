@@ -1,0 +1,43 @@
+<div class="date-selector">
+  <ul>
+    <li *ngFor="let day of days">
+      <a
+        [ngClass]="{ selected: day === selectedDate }"
+        (click)="selectDate(day)"
+      >
+        {{ day | date : "EEE d MMM" }}
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="matches.length > 0">
+  <h3>Matches for {{ selectedDate | date : "EEE d MMM" }}</h3>
+  <div *ngFor="let league of matches">
+    <h5>{{ league.name }}</h5>
+    <table>
+      <thead>
+        <tr>
+          <th>Match</th>
+          <th>Kick-off</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          *ngFor="
+            let match of league.matches
+              | orderBy : ['MatchDate', 'KickOffLocalTime']
+          "
+          (click)="selectMatch(match)"
+        >
+          <td>{{ match.Team1Name }} vs {{ match.Team2Name }}</td>
+          <td>
+            {{ match.KickOffLocalTime | date : "h:mm a" }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div *ngIf="matches.length === 0">Loading matches...</div>

@@ -1,0 +1,15 @@
+.bet-builder-fixture {
+  background-color: black;
+  color: white;
+  text-align: center;
+  padding: 10px;
+  margin-bottom: 20px; /* add some margin at the bottom */
+}
+
+.bet-builder-fixture h2 {
+  margin: 0;
+}
+
+.container {
+  margin-top: 20px; /* add some margin at the top */
+}
